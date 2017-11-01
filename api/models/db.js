@@ -1,12 +1,14 @@
 var mongoose = require('mongoose'),
 		config = require('./config'),
-		readLine = require('readline'), 
+		readLine = require('readline'), // Maybe unusefully
+		gracefulShutdown, 
 		dbURI = 'mongodb://localhost:27017/enAppDB';
 
-mongoose.connect(dbURI, {useMongoClient: true});
 if (process.env.NODE_ENV === 'production') {
 	// database production URI
 }
+
+mongoose.connect(dbURI, {useMongoClient: true});
 
 /*
 if (process.platform === "win32") {
@@ -36,7 +38,7 @@ console.log('Mongoose disconnected');
 
 // CAPTURE APP TERMINATION / RESTART EVENTS
 // To be called when process is restarted or terminated
-var gracefulShutdown = function(msg, callback) {
+gracefulShutdown = function(msg, callback) {
 	mongoose.connection.close(function () {
 		console.log('Mongoose disconnected through ' + msg);
 		callback();
@@ -57,4 +59,5 @@ process.on('SIGINT', function() {
 	});
 });
 
-// 
+// Schemas & Models
+require('./verbs'); // 

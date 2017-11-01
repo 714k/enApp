@@ -46,4 +46,4 @@ var verbSchema = new mongoose.Schema({
 
 });
 
-mongoose.model('verb', verbSchema);
+mongoose.model('Verb', verbSchema);
